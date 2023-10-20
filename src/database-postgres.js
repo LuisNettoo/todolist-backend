@@ -1,5 +1,4 @@
 import { sql } from "./db.js";
-import { randomUUID } from "node:crypto"
 
 export class DatabasePostgres {
   async list(search) {
@@ -15,11 +14,9 @@ export class DatabasePostgres {
   }
 
   async create(task) {
-    const taskID = randomUUID()
-    const status = "todo"
-    const { title } = task
+    const { id, title, status } = task
 
-    await sql`INSERT INTO tasks(id, title, status) VALUES (${taskID}, ${title}, ${status})`
+    await sql`INSERT INTO tasks(id, title, status) VALUES (${id}, ${title}, ${status})`
   }
 
   async update(id, task) {

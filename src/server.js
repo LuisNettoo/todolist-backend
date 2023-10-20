@@ -1,5 +1,7 @@
 import { fastify } from "fastify";
 import cors from "@fastify/cors";
+import { randomUUID } from "node:crypto"
+
 import { DatabasePostgres } from "./database-postgres.js";
 
 const server = fastify()
@@ -18,13 +20,17 @@ server.get("/api/v1/tasks", async (request) => {
 })
 
 server.post("/api/v1/tasks", async (request, reply) => {
+  const id = randomUUID()
+  const status = "todo"
   const { title } = request.body;
 
   await database.create({
+    id,
     title,
+    status
   })
 
-  return reply.status(201).send("Task created sucess!")
+  return reply.status(201).send({task: {id, title, status}})
 })
 
 server.put("/api/v1/tasks/:id", async (request, reply) => {
