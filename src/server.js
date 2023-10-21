@@ -48,12 +48,14 @@ server.put("/api/v1/tasks/:id", async (request, reply) => {
 server.delete("/api/v1/tasks/:id", async (request, reply) => {
   const taskID = request.params.id
 
-  database.delete(taskID)
+  await database.delete(taskID)
 
-  return reply.status(204).send("Task deleted sucess!")
+  const tasks = await database.list(undefined)
+
+  return reply.status(200).send({tasks})
 })
 
 server.listen({
   host: "0.0.0.0",
-  port: process.env.PORT ?? 3030,
+  port: process.env.PORT ?? 3333,
 })
