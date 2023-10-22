@@ -42,7 +42,7 @@ server.put("/api/v1/tasks/:id", async (request, reply) => {
     status,
   })
 
-  return reply.status(200).send({task: {taskID, title, status}})
+  return reply.status(200).send({task: {id: taskID, title, status}})
 })
 
 server.delete("/api/v1/tasks/:id", async (request, reply) => {
